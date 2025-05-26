@@ -76,3 +76,6 @@ CREATE INDEX fiets_type_beschrijving ON fiets_type(beschrijving);
 CREATE INDEX fiets_type_model ON fiets_type(model);
 CREATE INDEX fiets_merk_idx ON fiets(merk);
 CREATE INDEX vestiging_naam_idx ON vestiging(naam);
+CREATE INDEX vestiging_adres_idx ON vestiging(straat, huisnummer, toevoeging);
+CREATE INDEX vestiging_postcode_idx ON vestiging(postcode);
+CREATE INDEX vestiging_plaats_idx ON vestiging(plaats);
