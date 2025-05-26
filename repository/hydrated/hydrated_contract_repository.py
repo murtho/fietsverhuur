@@ -45,6 +45,7 @@ class HydratedContractRepository(AbstractHydratedRepository):
         klant_data = {}
         vestiging_data = {}
 
+        # splits het query_result(aat) in verschillende data lijsten
         for key, value in query_result.items():
 
             if key.startswith(self.__CONTRACT_ALIAS + self._DIVIDER):
@@ -56,6 +57,7 @@ class HydratedContractRepository(AbstractHydratedRepository):
             if key.startswith(self.__VESTIGING_ALIAS + self._DIVIDER):
                 vestiging_data[re.sub(r'^' + self.__VESTIGING_ALIAS + self._DIVIDER, '', key)] = value
 
+        # bouw het gehydrateerde data model op
         contract = HydratedContract(contract_data)
         contract.set_klant(Klant(klant_data))
         contract.set_vestiging(Vestiging(vestiging_data))

@@ -39,6 +39,7 @@ class HydratedFietsRepository(AbstractHydratedRepository):
         fiets_data = {}
         fiets_type_data = {}
 
+        # splits het query_result(aat) in verschillende data lijsten
         for key, value in query_result.items():
 
             if key.startswith(self.__FIETS_ALIAS + self._DIVIDER):
@@ -47,6 +48,7 @@ class HydratedFietsRepository(AbstractHydratedRepository):
             if key.startswith(self.__FIETS_TYPE_ALIAS + self._DIVIDER):
                 fiets_type_data[re.sub(r'^' + self.__FIETS_TYPE_ALIAS + self._DIVIDER, '', key)] = value
 
+        # bouw het gehydrateerde data model op
         fiets = HydratedFiets(fiets_data)
         fiets.set_fiets_type(FietsType(fiets_type_data))
 
