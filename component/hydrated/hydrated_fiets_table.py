@@ -2,6 +2,7 @@ from rich.console import Console
 from rich.table import Table
 from model.hydrated.hydrated_fiets import HydratedFiets
 
+# Tabel die Fiets en FietsType gegevens toont
 class HydratedFietsTable:
     COLUMNS = [
         'id',
@@ -17,7 +18,7 @@ class HydratedFietsTable:
         self.fietsen_list = fietsen_list
 
         if len(self.fietsen_list) == 0:
-            raise Exception('Fietsen list is leeg')
+            raise Exception('Fietsen lijst is leeg')
     def print(self) -> None:
         console = Console()
 

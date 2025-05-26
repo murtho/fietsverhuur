@@ -2,6 +2,7 @@ from rich.console import Console
 from rich.table import Table
 from model.hydrated.hydrated_contract import HydratedContract
 
+# Tabel die Datum, Klant en Vestiging gegevens voor een Contract toont
 class HydratedContractTable:
     COLUMNS = [
         'id',
@@ -16,7 +17,7 @@ class HydratedContractTable:
         self.contracten_list = contracten_list
 
         if len(self.contracten_list) == 0:
-            raise Exception('Contracten list is leeg')
+            raise Exception('Contracten lijst is leeg')
 
     def print(self) -> None:
         console = Console()

@@ -2,7 +2,7 @@ from rich.console import Console
 from rich.table import Table
 from model.hydrated.hydrated_contract_fiets import HydratedContractFiets
 
-
+# Tabel die gecontracteerde Fiets en FietsType gegevens toont
 class HydratedContractFietsTable:
     COLUMNS = [
         'fietsnr',
@@ -16,7 +16,7 @@ class HydratedContractFietsTable:
         self.contract_fietsen_list = contract_fietsen_list
 
         if len(self.contract_fietsen_list) == 0:
-            raise Exception('Contract fietsen list is leeg')
+            raise Exception('Contract fietsen lijst is leeg')
 
     def print(self) -> None:
         console = Console()
