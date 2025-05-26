@@ -155,7 +155,6 @@ class ContractController:
         if 'j' == input('Wil je het contract bekijken? (j/n)'):
             self.toon_contract(nieuw_contract_id)
 
-
     def __prompt_for_contract_id(self) -> int:
         while True:
             contract_id = input('Welke contract wil je selecteren? (id)')

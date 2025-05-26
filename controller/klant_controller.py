@@ -159,7 +159,6 @@ class KlantController:
             klant_table = KlantTable(klanten_list)
             klant_table.print()
 
-
     def __prompt_for_voornaam(self) -> str:
         while True:
             voornaam = input('Wat is de voornaam?')

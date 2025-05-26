@@ -19,6 +19,7 @@ class HydratedFietsTable:
 
         if len(self.fietsen_list) == 0:
             raise Exception('Fietsen lijst is leeg')
+
     def print(self) -> None:
         console = Console()
 

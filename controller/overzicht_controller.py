@@ -22,7 +22,6 @@ class OverzichtController:
         self.__vestiging_repo = vestiging_repo
 
     def totaal_overzicht(self):
-
         fietsen_list = self.__hydrated_fiets_repo.get_all()
         fietsen_table = HydratedFietsTable(fietsen_list)
         fietsen_table.print()
