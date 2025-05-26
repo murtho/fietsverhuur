@@ -45,6 +45,7 @@ class HydratedContractFietsRepository(AbstractHydratedRepository):
             'fiets_type_id',
             'beschrijving',
             'model',
+            'electrisch',
             'dagprijs',
         ]
 
