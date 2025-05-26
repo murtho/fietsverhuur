@@ -13,9 +13,9 @@ import re # regex
 # De data voor ContractFiets, Fiets en FietsType wordt aan elkaar gekoppeld tijdens het hydrateren
 class HydratedContractFietsRepository(AbstractHydratedRepository):
 
-    __CONTRACT_FIETS_ALIAS = 'contract_fiets'
-    __FIETS_ALIAS = 'fiets'
-    __FIETS_TYPE_ALIAS = 'fiets_type'
+    __CONTRACT_FIETS_ALIAS = 'cf'
+    __FIETS_ALIAS = 'f'
+    __FIETS_TYPE_ALIAS = 'ft'
 
     def __contract_fiets_fields(self) -> list[str]:
         fields = ContractFiets.fields()

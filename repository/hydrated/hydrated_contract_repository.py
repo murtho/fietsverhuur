@@ -12,9 +12,9 @@ import re # regex
 # De data voor Contract, Klant en Vestiging wordt aan elkaar gekoppeld tijdens het hydrateren
 class HydratedContractRepository(AbstractHydratedRepository):
 
-    __CONTRACT_ALIAS = 'contract'
-    __KLANT_ALIAS = 'klant'
-    __VESTIGING_ALIAS = 'vestiging'
+    __CONTRACT_ALIAS = 'c'
+    __KLANT_ALIAS = 'k'
+    __VESTIGING_ALIAS = 'v'
 
     def __contract_fields(self) -> list[str]:
         fields = Contract.fields()
