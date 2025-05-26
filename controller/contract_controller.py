@@ -1,6 +1,6 @@
-from component.contract_table import ContractTable
 from component.hydrated.hydrated_contract_fiets_table import HydratedContractFietsTable
 from component.hydrated.hydrated_fiets_table import HydratedFietsTable
+from component.hydrated.hydrated_contract_table import HydratedContractTable
 from component.klant_table import KlantTable
 from component.vestiging_table import VestigingTable
 from model.contract import Contract
@@ -39,8 +39,8 @@ class ContractController:
 
     def toon_contract(self, contract_id : int = None) -> None:
         if contract_id is None:
-            contracten_list = self.__contract_repo.get_all()
-            contract_table = ContractTable(contracten_list)
+            contracten_list = self.__hydrated_contract_repo.get_all()
+            contract_table = HydratedContractTable(contracten_list)
             contract_table.print()
 
             print('om een contract te tonen, dient u deze te selecteren?')
