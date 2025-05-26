@@ -2,6 +2,7 @@ from rich.console import Console
 from rich.table import Table
 from model.fiets import Fiets
 
+# 0 usages TODO: remove this obsolete table
 class FietsTable:
     COLUMNS = [
         'id',

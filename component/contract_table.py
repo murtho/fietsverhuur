@@ -2,6 +2,7 @@ from rich.console import Console
 from rich.table import Table
 from model.contract import Contract
 
+# 0 usages TODO: remove this obsolete table
 class ContractTable:
     COLUMNS = [
         'id',
