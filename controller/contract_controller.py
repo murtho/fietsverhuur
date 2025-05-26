@@ -86,7 +86,6 @@ class ContractController:
         console = Console()
         console.print(totaal_tabel)
 
-
     def nieuw_contract(self) -> None:
         klanten_list = self.__klant_repo.get_all()
         klant_table = KlantTable(klanten_list)
@@ -114,12 +113,19 @@ class ContractController:
         })
 
         beschikbare_fietsen_list = self.__hydrated_fiets_repo.get_all_beschikbaar_binnen_datum_bereik(start_datum, eind_datum)
+
+        # Controleer of er überhaupt fietsen beschikbaar zijn om het contract op te stellen
+        if len(beschikbare_fietsen_list) == 0:
+            print('Er zijn geen fietsen beschikbaar voor het geselecteerde datum bereik.')
+            return
+
         fiets_table = HydratedFietsTable(beschikbare_fietsen_list)
         fiets_table.print()
 
         print('om een nieuw contract te maken, dient u een of meerdere fietsen te selecteren.')
         geselecteerde_fietsen_list = []
 
+        # Er wordt ten minste 1 fiets geselecteerd tot het maximale aantal fietsen bereikt is.
         while len(geselecteerde_fietsen_list) < len(beschikbare_fietsen_list):
             geselecteerde_fiets_id = self.__prompt_for_fiets_id(start_datum, eind_datum)
             geselecteerde_fiets = self.__hydrated_fiets_repo.get_beschikbaar_binnen_datum_bereik_by_id(start_datum, eind_datum, geselecteerde_fiets_id)

@@ -108,7 +108,7 @@ class HydratedContractFietsRepository(AbstractHydratedRepository):
 
         return self.__hydrate(query_result)
 
-
+    # Zoek de gecontracteerde fietsen op voor een specifiek contract
     def get_by_contract_id(self, contract_id: int) -> list[HydratedContractFiets]:
         contract_fietsen_list = []
 
@@ -124,8 +124,5 @@ class HydratedContractFietsRepository(AbstractHydratedRepository):
 
         for query_result in self._fetch_all(query, (contract_id,)):
             contract_fietsen_list.append(self.__hydrate(query_result))
-
-        if len(contract_fietsen_list) == 0:
-            return []
 
         return contract_fietsen_list
