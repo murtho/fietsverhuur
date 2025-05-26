@@ -102,8 +102,7 @@ class HydratedContractFietsRepository(AbstractHydratedRepository):
 
         fields = self.__contract_fiets_fields() + self.__fiets_fields() + self.__fiets_type_fields()
 
-        query = ('SELECT ' + ', '.join(
-            fields) + ' FROM ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + ' AS ' + self.__CONTRACT_FIETS_ALIAS +
+        query = ('SELECT ' + ', '.join(fields) + ' FROM ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + ' AS ' + self.__CONTRACT_FIETS_ALIAS +
                  (' LEFT JOIN ' + FietsRepository.FIETS_TABLE + ' AS ' + self.__FIETS_ALIAS +
                   ' ON ' + self.__CONTRACT_FIETS_ALIAS + '.fiets_id = ' + self.__FIETS_ALIAS + '.fiets_id') +
                  (' LEFT JOIN ' + FietsTypeRepository.FIETS_TYPE_TABLE + ' AS ' + self.__FIETS_TYPE_ALIAS +
