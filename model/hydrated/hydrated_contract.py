@@ -2,7 +2,8 @@ from model.contract import Contract
 from model.klant import Klant
 from model.vestiging import Vestiging
 
-
+# De associaties tussen Klant en Vestiging met Contract worden vastgelegd in deze class
+# Iedere Contract is voor een Klant op een Vestiging, de objecten dienen opgeslagen te worden na het instantiëren
 class HydratedContract(Contract):
 
     klant: Klant = None

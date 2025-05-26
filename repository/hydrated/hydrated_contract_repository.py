@@ -7,7 +7,8 @@ from repository.vestiging_repository import VestigingRepository
 from repository.hydrated.abstract_hydrated_repository import AbstractHydratedRepository
 import re # regex
 
-
+# De repository haalt data op uit meerdere database tabellen
+# De data voor Contract, Klant en Vestiging wordt aan elkaar gekoppeld tijdens het hydrateren
 class HydratedContractRepository(AbstractHydratedRepository):
 
     __CONTRACT_ALIAS = 'contract'

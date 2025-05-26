@@ -1,10 +1,12 @@
 from containers import Container
 
+# Interactie met de gebruiker in het hoofd menu
 class MainMenu:
 
     def __init__(self):
         pass
 
+    # Toon het menu
     def display_menu(self):
         print('Hoofd Menu')
         print('[1] klant toevoegen')
@@ -20,6 +22,7 @@ class MainMenu:
         choice = int(input('Welke actie wil je uitvoeren?'))
         self.__handle_menu_choice(choice)
 
+    # handel de keuze van de gebruiker af
     def __handle_menu_choice(self, choice):
         match choice:
             case 1:
@@ -84,6 +87,7 @@ class MainMenu:
         container.overzicht_controller().totaal_overzicht()
         self.__return_to_menu()
 
+    # Vraag of de gebruiker terug wil naar het menu
     def __return_to_menu(self):
         answer = input('Wilt u terug naar het menu? (j/n)')
 

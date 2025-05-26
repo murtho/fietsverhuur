@@ -2,6 +2,7 @@ from config.database_config import DatabaseConfig
 
 import mysql.connector
 
+# Class die de verbinding met database vastlegt
 class Database:
     def __init__(self, config : DatabaseConfig):
         self.config = config.get_dictionary()

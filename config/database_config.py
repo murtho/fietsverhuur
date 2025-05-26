@@ -1,9 +1,10 @@
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
+# Lees environment variabelen uit het .env bestand
 load_dotenv()
 
+# Configuratie voor de database wordt in deze class opgeslagen
 class DatabaseConfig:
     def __init__(self):
         self.host = os.getenv("DB_HOST")

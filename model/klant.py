@@ -27,7 +27,6 @@ class Klant:
     postcode : str | None = None
     plaats : str | None = None
 
-
     def __init__(self, klant_data : dict[str, str | int]):
         # Valideer of alle attributen van de klant aanwezig zijn
         for key in self.MANDATORY_KEYS:
@@ -37,7 +36,6 @@ class Klant:
         # Kopieer alle data van de klant
         for attribute, value in klant_data.items():
             setattr(self, attribute, value)
-
 
     def __dict__(self):
         dictionary = {}

@@ -7,7 +7,8 @@ from repository.fiets_type_repository import FietsTypeRepository
 from repository.hydrated.abstract_hydrated_repository import AbstractHydratedRepository
 import re # regex
 
-
+# De repository haalt data op uit meerdere database tabellen
+# De data voor Fiets en FietsType wordt aan elkaar gekoppeld tijdens het hydrateren
 class HydratedFietsRepository(AbstractHydratedRepository):
 
     __FIETS_ALIAS = 'fiets'
@@ -86,6 +87,7 @@ class HydratedFietsRepository(AbstractHydratedRepository):
 
         return self.__hydrate(query_result)
 
+    # Zoek een lijst met fietsen op die beschikbaar is tussen het opgegeven datum bereik
     def get_all_beschikbaar_binnen_datum_bereik(self, start_datum: str, eind_datum: str) -> list[HydratedFiets]:
         fietsen_list = []
 
@@ -114,6 +116,7 @@ class HydratedFietsRepository(AbstractHydratedRepository):
 
         return fietsen_list
 
+    # Zoek op of een specifieke fiets beschikbaar is binnen het opgegeven datum bereik
     def get_beschikbaar_binnen_datum_bereik_by_id(self, start_datum: str, eind_datum: str, id: int) -> HydratedFiets | None:
         fields = self.__fiets_fields() + self.__fiets_type_fields()
 

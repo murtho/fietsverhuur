@@ -1,7 +1,8 @@
 from model.fiets import Fiets
 from model.fiets_type import FietsType
 
-
+# De associatie tussen Fiets en FietsType wordt vastgelegd in deze class
+# Iedere Fiets is van een FietsType, het FietsType object dient opgeslagen te worden na het instantiëren
 class HydratedFiets(Fiets):
 
     fiets_type: FietsType = None

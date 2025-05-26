@@ -7,29 +7,34 @@ from repository.hydrated.hydrated_fiets_repository import HydratedFietsRepositor
 from repository.klant_repository import KlantRepository
 from repository.vestiging_repository import VestigingRepository
 
-
+# Toon overzicht van alle opgeslagen gegevens
 class OverzichtController:
 
+    __hydrated_contract_repo : HydratedContractRepository = None
+    __hydrated_fiets_repo : HydratedFietsRepository = None
+    __klant_repo : KlantRepository = None
+    __vestiging_repo : VestigingRepository = None
+
     def __init__(self, hydrated_contract_repo : HydratedContractRepository, hydrated_fiets_repo : HydratedFietsRepository, klant_repo : KlantRepository, vestiging_repo : VestigingRepository) -> None:
-        self.hydrated_contract_repo = hydrated_contract_repo
-        self.hydrated_fiets_repo = hydrated_fiets_repo
-        self.klant_repo = klant_repo
-        self.vestiging_repo = vestiging_repo
+        self.__hydrated_contract_repo = hydrated_contract_repo
+        self.__hydrated_fiets_repo = hydrated_fiets_repo
+        self.__klant_repo = klant_repo
+        self.__vestiging_repo = vestiging_repo
 
     def totaal_overzicht(self):
 
-        fietsen_list = self.hydrated_fiets_repo.get_all()
+        fietsen_list = self.__hydrated_fiets_repo.get_all()
         fietsen_table = HydratedFietsTable(fietsen_list)
         fietsen_table.print()
 
-        vestigingen_list = self.vestiging_repo.get_all()
+        vestigingen_list = self.__vestiging_repo.get_all()
         vestigingen_table = VestigingTable(vestigingen_list)
         vestigingen_table.print()
 
-        klanten_list = self.klant_repo.get_all()
+        klanten_list = self.__klant_repo.get_all()
         klanten_table = KlantTable(klanten_list)
         klanten_table.print()
 
-        contracten_list = self.hydrated_contract_repo.get_all()
+        contracten_list = self.__hydrated_contract_repo.get_all()
         contracten_table = HydratedContractTable(contracten_list)
         contracten_table.print()

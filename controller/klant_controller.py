@@ -5,7 +5,7 @@ from rich.console import Console
 from model.klant import Klant
 import re # regex
 
-
+# Interactie met de gebruiker voor het tonen, invoeren en wijzigen van klant gegevens
 class KlantController:
 
     __klant_repo : KlantRepository = None
@@ -13,6 +13,7 @@ class KlantController:
     def __init__(self, klant_repo : KlantRepository) -> None:
         self.__klant_repo = klant_repo
 
+    # Maak een nieuwe klant aan
     def nieuwe_klant(self) -> None:
         print('Voer de gevraagde gegevens in om een nieuwe klant in te voeren.')
 
@@ -60,6 +61,7 @@ class KlantController:
         else:
             print('De klant is niet toegevoegd.')
 
+    # Bewerk een bestaande klant
     def bewerk_klant(self) -> None:
         klanten_list = self.__klant_repo.get_all()
         klant_table = KlantTable(klanten_list)
@@ -122,7 +124,7 @@ class KlantController:
         else:
             print('De klant is niet gewijzigd.')
 
-
+    # Verwijder een bestaande klant
     def verwijder_klant(self) -> None:
         klanten_list = self.__klant_repo.get_all()
         klant_table = KlantTable(klanten_list)
@@ -139,6 +141,7 @@ class KlantController:
         else:
             print('De klant is niet verwijderd.')
 
+    # Zoek een klant op naam of adres gegevens
     def zoek_klant(self) -> None:
 
         print('U kunt een klant op naam zoeken')

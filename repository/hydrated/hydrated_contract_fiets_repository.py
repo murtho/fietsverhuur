@@ -7,7 +7,8 @@ from repository.fiets_type_repository import FietsTypeRepository
 from repository.hydrated.abstract_hydrated_repository import AbstractHydratedRepository
 import re # regex
 
-
+# De repository haalt data op uit meerdere database tabellen
+# De data voor ContractFiets, Fiets en FietsType wordt aan elkaar gekoppeld tijdens het hydrateren
 class HydratedContractFietsRepository(AbstractHydratedRepository):
 
     __CONTRACT_FIETS_ALIAS = 'contract_fiets'

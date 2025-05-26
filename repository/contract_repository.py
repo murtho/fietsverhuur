@@ -1,6 +1,7 @@
 from repository.abstract_repository import AbstractRepository
 from model.contract import Contract
 
+# Complete CRUD interactie met de Contract tabel
 class ContractRepository(AbstractRepository):
     CONTRACT_TABLE = 'contract'
 
@@ -37,6 +38,7 @@ class ContractRepository(AbstractRepository):
         params = (model.klant_id, model.vestiging_id, model.start_datum, model.eind_datum, model.contract_id)
         self._execute_and_commit_query(query, params)
 
+    # Zoek alle contracten op voor een specifieke klant
     def get_by_klant_id(self, klant_id: int) -> list[Contract]:
         contracten_list = []
 

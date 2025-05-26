@@ -1,6 +1,7 @@
 from repository.abstract_repository import AbstractRepository
 from model.fiets_type import FietsType
 
+# Complete CRUD interactie met de FietsType tabel
 class FietsTypeRepository(AbstractRepository):
     FIETS_TYPE_TABLE = 'fiets_type'
 

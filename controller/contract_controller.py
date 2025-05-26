@@ -17,7 +17,7 @@ from rich.table import Table
 import datetime
 import re # regex
 
-
+# Interactie met de gebruiker voor het tonen en opstellen van contracten
 class ContractController:
 
     __contract_repo : ContractRepository = None

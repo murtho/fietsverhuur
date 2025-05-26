@@ -1,7 +1,8 @@
 from database.connection import Database
-from abc import ABC, abstractmethod
+from abc import ABC
 
-
+# Deze abstracte class definieert de interne methodes om verbinding met de database te leggen
+# Deze basis functionaliteit is nodig voor alle repositories
 class AbstractConnectionRepository(ABC):
     def __init__(self, db: Database):
         self.__db = db
@@ -23,11 +24,3 @@ class AbstractConnectionRepository(ABC):
     def _fetch_one(self, query, params=None):
         cursor = self.__execute_query(query, params)
         return cursor.fetchone()
-
-    @abstractmethod
-    def get_all(self) -> list:
-        pass
-
-    @abstractmethod
-    def get_by_id(self, id: int) -> object | None:
-        pass

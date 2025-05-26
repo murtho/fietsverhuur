@@ -1,6 +1,7 @@
 from repository.abstract_repository import AbstractRepository
 from model.klant import Klant
 
+# Complete CRUD interactie met de Klant tabel
 class KlantRepository(AbstractRepository):
     KLANT_TABLE = 'klant'
 
@@ -37,6 +38,7 @@ class KlantRepository(AbstractRepository):
         params = (model.voornaam, model.achternaam, model.klant_id)
         self._execute_and_commit_query(query, params)
 
+    # Klanten kunnen gezocht worden op naam of adres gegevens
     def search(self, search_term: str) -> list[Klant]:
         klanten_list = []
 

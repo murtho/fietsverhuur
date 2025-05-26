@@ -16,7 +16,8 @@ from repository.hydrated.hydrated_fiets_repository import HydratedFietsRepositor
 from repository.klant_repository import KlantRepository
 from repository.vestiging_repository import VestigingRepository
 
-
+# Container class legt de afhankelijkheden vast binnen de applicatie
+# Afhankelijke classes worden met dependency injection voorzien
 class Container(containers.DeclarativeContainer):
 
     config = providers.Factory(DatabaseConfig)

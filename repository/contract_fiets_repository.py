@@ -1,6 +1,7 @@
 from repository.abstract_repository import AbstractRepository
 from model.contract_fiets import ContractFiets
 
+# Complete CRUD interactie met de ContractFiets tabel
 class ContractFietsRepository(AbstractRepository):
     CONTRACT_FIETS_TABLE = 'contract_fiets'
 
@@ -37,6 +38,7 @@ class ContractFietsRepository(AbstractRepository):
         params = (model.contract_id, model.fiets_id, model.contract_fiets_id)
         self._execute_and_commit_query(query, params)
 
+    # Zoek Gecontracteerde Fietsen op voor een specifiek contract
     def get_by_contract_id(self, contract_id: int) -> list[ContractFiets]:
         contract_fietsen_list = []
 

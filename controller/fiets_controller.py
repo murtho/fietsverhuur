@@ -6,7 +6,7 @@ from rich.console import Console
 from model.fiets import Fiets
 import re # regex
 
-
+# Interactie met de gebruiker voor het invoeren van nieuwe fietsen
 class FietsController:
 
     __fiets_repo : FietsRepository = None
@@ -16,6 +16,7 @@ class FietsController:
         self.__fiets_repo = fiets_repo
         self.__fiets_type_repo = fiets_type_repo
 
+    # Maak een nieuwe fiets aan
     def nieuwe_fiets(self) -> None:
         print('Voer de gevraagde gegevens in om een nieuwe fiets in te voeren.')
 
@@ -93,16 +94,3 @@ class FietsController:
                 return self.__prompt_for_fiets_type_id()
             else:
                 return int(fiets_type_id)
-
-    # TODO: this method belongs in contract controller, so let's move it there when it's created
-    def __prompt_for_fiets_id(self) -> int:
-        while True:
-            fiets_id = input('Welke fiets wil je selecteren? (id)')
-            if re.match(r'^\d+$', fiets_id) is None:
-                print('U dient een geldig heel getal in te voeren om een fiets ID te selecteren.')
-                return self.__prompt_for_fiets_id()
-            if self.__fiets_repo.get_by_id(fiets_id) == None:
-                print('U dient een ID in te voeren dat voorkomt in de lijst van fietsen.')
-                return self.__prompt_for_fiets_id()
-            else:
-                return int(fiets_id)

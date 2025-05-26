@@ -1,6 +1,7 @@
 from model.vestiging import Vestiging
 from repository.abstract_repository import AbstractRepository
 
+# Complete CRUD interactie met de Vestiging tabel
 class VestigingRepository(AbstractRepository):
     VESTIGING_TABLE = 'vestiging'
 
