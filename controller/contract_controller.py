@@ -126,11 +126,15 @@ class ContractController:
         geselecteerde_fietsen_list = []
 
         # Er wordt ten minste 1 fiets geselecteerd tot het maximale aantal fietsen bereikt is.
-        while len(geselecteerde_fietsen_list) < len(beschikbare_fietsen_list):
+        while len(geselecteerde_fietsen_list) <= len(beschikbare_fietsen_list):
             geselecteerde_fiets_id = self.__prompt_for_fiets_id(start_datum, eind_datum)
             geselecteerde_fiets = self.__hydrated_fiets_repo.get_beschikbaar_binnen_datum_bereik_by_id(start_datum, eind_datum, geselecteerde_fiets_id)
             geselecteerde_fietsen_list.append(geselecteerde_fiets)
             print('je hebt de {merk} (id: {id}) fiets toegevoegd'.format(merk = geselecteerde_fiets.merk, id = geselecteerde_fiets.fiets_id))
+
+            if (len(geselecteerde_fietsen_list) == len(beschikbare_fietsen_list)):
+                print('U hebt alle beschikbare fietsen aan het contract toegevoegd')
+                break
 
             if 'j' == input('Wil je nog een fiets toevoegen? (j/n)'):
                 continue
