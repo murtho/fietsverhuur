@@ -14,6 +14,10 @@ class HydratedFietsRepository(AbstractHydratedRepository):
 
     __FIETS_ALIAS = 'f'
     __FIETS_TYPE_ALIAS = 'ft'
+    __CONTRACT_ALIAS = 'c'
+    __CONTRACT_FIETS_ALIAS = 'cf'
+    __SUB_CONTRACT_ALIAS = 'sc'
+    __SUB_CONTRACT_FIETS_ALIAS = 'scf'
 
     def __fiets_fields(self) -> list[str]:
         fields = Fiets.fields()
@@ -83,21 +87,23 @@ class HydratedFietsRepository(AbstractHydratedRepository):
 
         fields = self.__fiets_fields() + self.__fiets_type_fields()
 
-        query = ('SELECT ' + ', '.join(fields) + ' FROM ' + FietsRepository.FIETS_TABLE +
+        query = ('SELECT ' + ', '.join(fields) + ' FROM ' + FietsRepository.FIETS_TABLE + ' AS ' + self.__FIETS_ALIAS +
                  ' LEFT JOIN ' + FietsTypeRepository.FIETS_TYPE_TABLE + ' AS ' + self.__FIETS_TYPE_ALIAS +
                  ' ON ' + self.__FIETS_ALIAS + '.fiets_type_id = ' + self.__FIETS_TYPE_ALIAS + '.fiets_type_id'
-                 ' LEFT JOIN ' + ContractFietsRepository.CONTRACT_FIETS_TABLE +
-                 ' ON ' + FietsRepository.FIETS_TABLE + '.fiets_id = ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + '.fiets_id' +
-                 ' LEFT JOIN ' + ContractRepository.CONTRACT_TABLE +
-                 ' ON ' + ContractRepository.CONTRACT_TABLE + '.contract_id = ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + '.contract_id' +
+                 ' LEFT JOIN ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + ' AS ' + self.__CONTRACT_FIETS_ALIAS +
+                 ' ON ' + self.__FIETS_ALIAS + '.fiets_id = ' + self.__CONTRACT_FIETS_ALIAS + '.fiets_id' +
+                 ' LEFT JOIN ' + ContractRepository.CONTRACT_TABLE + ' AS ' + self.__CONTRACT_ALIAS +
+                 ' ON ' + self.__CONTRACT_ALIAS + '.contract_id = ' + self.__CONTRACT_FIETS_ALIAS + '.contract_id' +
                  ' WHERE NOT EXISTS (' +
-                    'SELECT ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + '.contract_fiets_id FROM ' + ContractFietsRepository.CONTRACT_FIETS_TABLE +
-                    ' INNER JOIN ' + ContractRepository.CONTRACT_TABLE + ' ON ' + ContractRepository.CONTRACT_TABLE + '.contract_id = ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + '.contract_id' +
-                    ' WHERE ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + '.fiets_id = ' + FietsRepository.FIETS_TABLE + '.fiets_id AND (' +
-                    ' %s BETWEEN ' + ContractRepository.CONTRACT_TABLE + '.start_datum AND ' + ContractRepository.CONTRACT_TABLE + '.eind_datum OR ' +
-                    ' %s BETWEEN ' + ContractRepository.CONTRACT_TABLE + '.start_datum AND ' + ContractRepository.CONTRACT_TABLE + '.eind_datum' +
+                    'SELECT ' + self.__SUB_CONTRACT_FIETS_ALIAS + '.contract_fiets_id'
+                    ' FROM ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + ' AS ' + self.__SUB_CONTRACT_FIETS_ALIAS +
+                    ' INNER JOIN ' + ContractRepository.CONTRACT_TABLE + ' AS ' + self.__SUB_CONTRACT_ALIAS +
+                    ' ON ' + self.__SUB_CONTRACT_ALIAS + '.contract_id = ' + self.__SUB_CONTRACT_FIETS_ALIAS + '.contract_id' +
+                    ' WHERE ' + self.__SUB_CONTRACT_FIETS_ALIAS + '.fiets_id = ' + self.__FIETS_ALIAS + '.fiets_id AND (' +
+                    ' %s BETWEEN ' + self.__SUB_CONTRACT_ALIAS + '.start_datum AND ' + self.__SUB_CONTRACT_ALIAS + '.eind_datum OR ' +
+                    ' %s BETWEEN ' + self.__SUB_CONTRACT_ALIAS + '.start_datum AND ' + self.__SUB_CONTRACT_ALIAS + '.eind_datum' +
                     ')' +
-                 ') GROUP BY ' + FietsRepository.FIETS_TABLE + '.fiets_id')
+                 ') GROUP BY ' + self.__FIETS_ALIAS + '.fiets_id')
 
         params = (start_datum, eind_datum)
 
@@ -110,22 +116,24 @@ class HydratedFietsRepository(AbstractHydratedRepository):
     def get_beschikbaar_binnen_datum_bereik_by_id(self, start_datum: str, eind_datum: str, id: int) -> HydratedFiets | None:
         fields = self.__fiets_fields() + self.__fiets_type_fields()
 
-        query = ('SELECT ' + ', '.join(fields) + ' FROM ' + FietsRepository.FIETS_TABLE +
+        query = ('SELECT ' + ', '.join(fields) + ' FROM ' + FietsRepository.FIETS_TABLE + ' AS ' + self.__FIETS_ALIAS +
                  ' LEFT JOIN ' + FietsTypeRepository.FIETS_TYPE_TABLE + ' AS ' + self.__FIETS_TYPE_ALIAS +
                  ' ON ' + self.__FIETS_ALIAS + '.fiets_type_id = ' + self.__FIETS_TYPE_ALIAS + '.fiets_type_id'
-                 ' LEFT JOIN ' + ContractFietsRepository.CONTRACT_FIETS_TABLE +
-                 ' ON ' + FietsRepository.FIETS_TABLE + '.fiets_id = ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + '.fiets_id' +
-                 ' LEFT JOIN ' + ContractRepository.CONTRACT_TABLE +
-                 ' ON ' + ContractRepository.CONTRACT_TABLE + '.contract_id = ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + '.contract_id' +
-                 ' WHERE ' + FietsRepository.FIETS_TABLE + '.fiets_id = %s' +
+                 ' LEFT JOIN ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + ' AS ' + self.__CONTRACT_FIETS_ALIAS +
+                 ' ON ' + self.__FIETS_ALIAS + '.fiets_id = ' + self.__CONTRACT_FIETS_ALIAS + '.fiets_id' +
+                 ' LEFT JOIN ' + ContractRepository.CONTRACT_TABLE + ' AS ' + self.__CONTRACT_ALIAS +
+                 ' ON ' + self.__CONTRACT_ALIAS + '.contract_id = ' + self.__CONTRACT_FIETS_ALIAS + '.contract_id' +
+                 ' WHERE ' + self.__FIETS_ALIAS + '.fiets_id = %s' +
                  ' AND NOT EXISTS (' +
-                    'SELECT ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + '.contract_fiets_id FROM ' + ContractFietsRepository.CONTRACT_FIETS_TABLE +
-                    ' INNER JOIN ' + ContractRepository.CONTRACT_TABLE + ' ON ' + ContractRepository.CONTRACT_TABLE + '.contract_id = ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + '.contract_id' +
-                    ' WHERE ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + '.fiets_id = ' + FietsRepository.FIETS_TABLE + '.fiets_id AND (' +
-                    ' %s BETWEEN ' + ContractRepository.CONTRACT_TABLE + '.start_datum AND ' + ContractRepository.CONTRACT_TABLE + '.eind_datum OR ' +
-                    ' %s BETWEEN ' + ContractRepository.CONTRACT_TABLE + '.start_datum AND ' + ContractRepository.CONTRACT_TABLE + '.eind_datum' +
+                    'SELECT ' + self.__SUB_CONTRACT_FIETS_ALIAS + '.contract_fiets_id'
+                    ' FROM ' + ContractFietsRepository.CONTRACT_FIETS_TABLE + ' AS ' + self.__SUB_CONTRACT_FIETS_ALIAS +
+                    ' INNER JOIN ' + ContractRepository.CONTRACT_TABLE + ' AS ' + self.__SUB_CONTRACT_ALIAS +
+                    ' ON ' + self.__SUB_CONTRACT_ALIAS + '.contract_id = ' + self.__SUB_CONTRACT_FIETS_ALIAS + '.contract_id' +
+                    ' WHERE ' + self.__SUB_CONTRACT_FIETS_ALIAS + '.fiets_id = ' + self.__FIETS_ALIAS + '.fiets_id AND (' +
+                    ' %s BETWEEN ' + self.__SUB_CONTRACT_ALIAS + '.start_datum AND ' + self.__SUB_CONTRACT_ALIAS + '.eind_datum OR ' +
+                    ' %s BETWEEN ' + self.__SUB_CONTRACT_ALIAS + '.start_datum AND ' + self.__SUB_CONTRACT_ALIAS + '.eind_datum' +
                     ')' +
-                 ') GROUP BY ' + FietsRepository.FIETS_TABLE + '.fiets_id')
+                 ') GROUP BY ' + self.__FIETS_ALIAS + '.fiets_id')
 
         params = (id, start_datum, eind_datum)
 
