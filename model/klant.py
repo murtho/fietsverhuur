@@ -1,6 +1,6 @@
 
 class Klant:
-    MANDATORY_KEYS = [
+    MANDATORY_ATTRIBUTES = [
         'voornaam',
         'achternaam',
         'straat',
@@ -9,7 +9,7 @@ class Klant:
         'plaats',
     ]
 
-    OPTIONAL_KEYS = [
+    OPTIONAL_ATTRIBUTES = [
         'toevoeging'
     ]
 
@@ -29,9 +29,9 @@ class Klant:
 
     def __init__(self, klant_data : dict[str, str | int]):
         # Valideer of alle attributen van de klant aanwezig zijn
-        for key in self.MANDATORY_KEYS:
-            if key not in klant_data:
-                raise Exception('Missing mandatory key: ' + key)
+        for attribute in self.MANDATORY_ATTRIBUTES:
+            if attribute not in klant_data:
+                raise Exception('Missing mandatory attribute: ' + attribute)
 
         # Kopieer alle data van de klant
         for attribute, value in klant_data.items():
@@ -42,24 +42,26 @@ class Klant:
 
         dictionary['klant_id'] = getattr(self, 'klant_id')
 
-        for attribute in self.MANDATORY_KEYS:
+        for attribute in self.MANDATORY_ATTRIBUTES:
             dictionary[attribute] = getattr(self, attribute)
 
-        for key in self.OPTIONAL_KEYS:
-            if hasattr(self, key):
-                dictionary[key] = getattr(self, key)
+        for attribute in self.OPTIONAL_ATTRIBUTES:
+            if hasattr(self, attribute):
+                dictionary[attribute] = getattr(self, attribute)
             else:
-                dictionary[key] = None
+                dictionary[attribute] = None
 
         return dictionary
 
+    @staticmethod
+    def fields() -> list:
+        return ['klant_id'] + Klant.MANDATORY_ATTRIBUTES + Klant.OPTIONAL_ATTRIBUTES
 
     def naam(self):
         return '{voornaam} {achternaam}'.format(
             voornaam = self.voornaam,
             achternaam = self.achternaam
         )
-
 
     def adres(self):
         return '{straat} {huisnummer}{toevoeging}'.format(

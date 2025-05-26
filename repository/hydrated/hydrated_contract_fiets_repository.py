@@ -1,6 +1,8 @@
 from model.hydrated.hydrated_contract_fiets import HydratedContractFiets
 from model.hydrated.hydrated_fiets import HydratedFiets
 from model.fiets_type import FietsType
+from model.fiets import Fiets
+from model.contract_fiets import ContractFiets
 from repository.contract_fiets_repository import ContractFietsRepository
 from repository.fiets_repository import FietsRepository
 from repository.fiets_type_repository import FietsTypeRepository
@@ -16,11 +18,7 @@ class HydratedContractFietsRepository(AbstractHydratedRepository):
     __FIETS_TYPE_ALIAS = 'fiets_type'
 
     def __contract_fiets_fields(self) -> list[str]:
-        fields = [
-            'contract_fiets_id',
-            'contract_id',
-            'fiets_id',
-        ]
+        fields = ContractFiets.fields()
 
         for i in range(len(fields)):
             fields[i] = self.__CONTRACT_FIETS_ALIAS + '.' + fields[i] + ' AS ' + self.__CONTRACT_FIETS_ALIAS + self._DIVIDER + fields[i]
@@ -28,12 +26,7 @@ class HydratedContractFietsRepository(AbstractHydratedRepository):
         return fields
 
     def __fiets_fields(self) -> list[str]:
-        fields = [
-            'fiets_id',
-            'merk',
-            'aankoop_datum',
-            'fiets_type_id',
-        ]
+        fields = Fiets.fields()
 
         for i in range(len(fields)):
             fields[i] = self.__FIETS_ALIAS + '.' + fields[i] + ' AS ' + self.__FIETS_ALIAS + self._DIVIDER + fields[i]
@@ -41,13 +34,7 @@ class HydratedContractFietsRepository(AbstractHydratedRepository):
         return fields
 
     def __fiets_type_fields(self) -> list[str]:
-        fields = [
-            'fiets_type_id',
-            'beschrijving',
-            'model',
-            'electrisch',
-            'dagprijs',
-        ]
+        fields = FietsType.fields()
 
         for i in range(len(fields)):
             fields[i] = self.__FIETS_TYPE_ALIAS + '.' + fields[i] + ' AS ' + self.__FIETS_TYPE_ALIAS + self._DIVIDER + fields[i]

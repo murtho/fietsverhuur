@@ -1,4 +1,5 @@
 from model.hydrated.hydrated_contract import HydratedContract
+from model.contract import Contract
 from model.klant import Klant
 from model.vestiging import Vestiging
 from repository.contract_repository import ContractRepository
@@ -16,13 +17,7 @@ class HydratedContractRepository(AbstractHydratedRepository):
     __VESTIGING_ALIAS = 'vestiging'
 
     def __contract_fields(self) -> list[str]:
-        fields = [
-            'contract_id',
-            'klant_id',
-            'vestiging_id',
-            'start_datum',
-            'eind_datum',
-        ]
+        fields = Contract.fields()
 
         for i in range(len(fields)):
             fields[i] = self.__CONTRACT_ALIAS + '.' + fields[i] + ' AS ' + self.__CONTRACT_ALIAS + self._DIVIDER + fields[i]
@@ -30,16 +25,7 @@ class HydratedContractRepository(AbstractHydratedRepository):
         return fields
 
     def __klant_fields(self) -> list[str]:
-        fields = [
-            'klant_id',
-            'voornaam',
-            'achternaam',
-            'straat',
-            'huisnummer',
-            'toevoeging',
-            'postcode',
-            'plaats',
-        ]
+        fields = Klant.fields()
 
         for i in range(len(fields)):
             fields[i] = self.__KLANT_ALIAS + '.' + fields[i] + ' AS ' + self.__KLANT_ALIAS + self._DIVIDER + fields[i]
@@ -47,15 +33,7 @@ class HydratedContractRepository(AbstractHydratedRepository):
         return fields
 
     def __vestiging_fields(self) -> list[str]:
-        fields = [
-            'vestiging_id',
-            'naam',
-            'straat',
-            'huisnummer',
-            'toevoeging',
-            'postcode',
-            'plaats',
-        ]
+        fields = Vestiging.fields()
 
         for i in range(len(fields)):
             fields[i] = self.__VESTIGING_ALIAS + '.' + fields[i] + ' AS ' + self.__VESTIGING_ALIAS + self._DIVIDER + fields[i]

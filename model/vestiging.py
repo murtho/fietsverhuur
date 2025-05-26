@@ -1,6 +1,6 @@
 
 class Vestiging:
-    MANDATORY_KEYS = [
+    MANDATORY_ATTRIBUTES = [
         'naam',
         'straat',
         'huisnummer',
@@ -8,7 +8,7 @@ class Vestiging:
         'plaats',
     ]
 
-    OPTIONAL_KEYS = [
+    OPTIONAL_ATTRIBUTES = [
         'toevoeging'
     ]
 
@@ -22,9 +22,9 @@ class Vestiging:
 
     def __init__(self, vestiging_data : dict[str, str | int]):
         # Valideer of alle attributen van de vestiging aanwezig zijn
-        for key in self.MANDATORY_KEYS:
-            if key not in vestiging_data:
-                raise Exception('Missing mandatory key: ' + key)
+        for attribute in self.MANDATORY_ATTRIBUTES:
+            if attribute not in vestiging_data:
+                raise Exception('Missing mandatory attribute: ' + attribute)
 
         # Kopieer alle data van de vestiging
         for attribute, value in vestiging_data.items():
@@ -35,16 +35,20 @@ class Vestiging:
 
         dictionary['vestiging_id'] = getattr(self, 'vestiging_id')
 
-        for attribute in self.MANDATORY_KEYS:
+        for attribute in self.MANDATORY_ATTRIBUTES:
             dictionary[attribute] = getattr(self, attribute)
 
-        for key in self.OPTIONAL_KEYS:
-            if hasattr(self, key):
-                dictionary[key] = getattr(self, key)
+        for attribute in self.OPTIONAL_ATTRIBUTES:
+            if hasattr(self, attribute):
+                dictionary[attribute] = getattr(self, attribute)
             else:
-                dictionary[key] = None
+                dictionary[attribute] = None
 
         return dictionary
+
+    @staticmethod
+    def fields() -> list:
+        return ['vestiging_id'] + Vestiging.MANDATORY_ATTRIBUTES + Vestiging.OPTIONAL_ATTRIBUTES
 
     def adres(self):
         return '{straat} {huisnummer}{toevoeging}'.format(

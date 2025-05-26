@@ -1,6 +1,6 @@
 
 class Contract:
-    MANDATORY_KEYS = [
+    MANDATORY_ATTRIBUTES = [
         'klant_id',
         'vestiging_id',
         'start_datum',
@@ -15,9 +15,9 @@ class Contract:
 
     def __init__(self, contract_data : dict[str, str | int]):
         # Valideer of alle attributen van het contract aanwezig zijn
-        for key in self.MANDATORY_KEYS:
-            if key not in contract_data:
-                raise Exception('Missing mandatory key: ' + key)
+        for attribute in self.MANDATORY_ATTRIBUTES:
+            if attribute not in contract_data:
+                raise Exception('Missing mandatory attribute: ' + attribute)
 
         # Kopieer alle data van het contract
         for attribute, value in contract_data.items():
@@ -28,10 +28,14 @@ class Contract:
 
         dictionary['contract_id'] = getattr(self, 'contract_id')
 
-        for attribute in self.MANDATORY_KEYS:
+        for attribute in self.MANDATORY_ATTRIBUTES:
             dictionary[attribute] = getattr(self, attribute)
 
         return dictionary
+
+    @staticmethod
+    def fields() -> list:
+        return ['contract_id'] + Contract.MANDATORY_ATTRIBUTES
 
     def aantal_dagen(self) -> int:
         return int(abs(self.eind_datum - self.start_datum).days + 1)

@@ -1,12 +1,12 @@
 
 class FietsType:
-    MANDATORY_KEYS = [
+    MANDATORY_ATTRIBUTES = [
         'beschrijving',
         'model',
         'dagprijs',
     ]
 
-    OPTIONAL_KEYS = [
+    OPTIONAL_ATTRIBUTES = [
         'electrisch',
     ]
 
@@ -21,9 +21,9 @@ class FietsType:
 
     def __init__(self, fiets_type_data : dict[str, str | int]):
         # Valideer of alle attributen van het fiets type aanwezig zijn
-        for key in self.MANDATORY_KEYS:
-            if key not in fiets_type_data:
-                raise Exception('Missing mandatory key: ' + key)
+        for attribute in self.MANDATORY_ATTRIBUTES:
+            if attribute not in fiets_type_data:
+                raise Exception('Missing mandatory attribute: ' + attribute)
 
         # Kopieer alle data van het fiets type
         for attribute, value in fiets_type_data.items():
@@ -34,13 +34,17 @@ class FietsType:
 
         dictionary['fiets_type_id'] = getattr(self, 'fiets_type_id')
 
-        for attribute in self.MANDATORY_KEYS:
+        for attribute in self.MANDATORY_ATTRIBUTES:
             dictionary[attribute] = getattr(self, attribute)
 
-        for key in self.OPTIONAL_KEYS:
-            if hasattr(self, key):
-                dictionary[key] = getattr(self, key)
+        for attribute in self.OPTIONAL_ATTRIBUTES:
+            if hasattr(self, attribute):
+                dictionary[attribute] = getattr(self, attribute)
             else:
-                dictionary[key] = None
+                dictionary[attribute] = None
 
         return dictionary
+
+    @staticmethod
+    def fields() -> list:
+        return ['fiets_type_id'] + FietsType.MANDATORY_ATTRIBUTES + FietsType.OPTIONAL_ATTRIBUTES
