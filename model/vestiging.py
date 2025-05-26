@@ -50,7 +50,7 @@ class Vestiging:
     def fields() -> list:
         return ['vestiging_id'] + Vestiging.MANDATORY_ATTRIBUTES + Vestiging.OPTIONAL_ATTRIBUTES
 
-    def adres(self):
+    def adres(self) -> str:
         return '{straat} {huisnummer}{toevoeging}'.format(
             straat = self.straat,
             huisnummer = self.huisnummer,

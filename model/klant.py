@@ -57,13 +57,13 @@ class Klant:
     def fields() -> list:
         return ['klant_id'] + Klant.MANDATORY_ATTRIBUTES + Klant.OPTIONAL_ATTRIBUTES
 
-    def naam(self):
+    def naam(self) -> str:
         return '{voornaam} {achternaam}'.format(
             voornaam = self.voornaam,
             achternaam = self.achternaam
         )
 
-    def adres(self):
+    def adres(self) -> str:
         return '{straat} {huisnummer}{toevoeging}'.format(
             straat = self.straat,
             huisnummer = self.huisnummer,
