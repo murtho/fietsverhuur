@@ -30,6 +30,7 @@ class FietsController:
             'fiets_type_id': fiets_type_id,
         })
 
+        # Toon de ingevoerde gegevens
         print('Valideer of je deze fiets definitief wil toevoegen?')
         table = Table(title='Nieuwe fiets')
         table.add_column('Eigenschap')
@@ -46,12 +47,11 @@ class FietsController:
         console = Console()
         console.print(table)
 
+        # Vraag een bevestiging aan de gebruiker
         proceed = input('Wil je deze fiets toevoegen? (j/n)')
 
         if proceed == 'j':
-            # TODO: test of insert van fiets werkt
             self.__fiets_repo.insert(fiets)
-
             print('De fiets is toegevoegd.')
         else:
             print('De fiets is niet toegevoegd.')

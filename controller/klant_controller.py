@@ -35,6 +35,7 @@ class KlantController:
             'plaats': plaats,
         })
 
+        # Toon de ingevoerde gegevens
         print('Valideer of je deze klant definitief wil toevoegen?')
         table = Table(title='Nieuwe klant')
         table.add_column('Eigenschap')
@@ -51,12 +52,11 @@ class KlantController:
         console = Console()
         console.print(table)
 
+        # Vraag een bevestiging aan de gebruiker
         proceed = input('Wil je deze klant toevoegen? (j/n)')
 
         if proceed == 'j':
-            # TODO: test of insert van klant werkt
             self.__klant_repo.insert(klant)
-
             print('De klant is toegevoegd.')
         else:
             print('De klant is niet toegevoegd.')
@@ -98,6 +98,7 @@ class KlantController:
         if 'j' == input('Wil je de plaats van de klant wijzigen? (j/n)'):
             klant_bewerkt['plaats'] = self.__prompt_for_plaats()
 
+        # Toon de ingevoerde gegevens
         print('Valideer of je deze klant definitief wil wijzigen?')
         table = Table(title='Bewerk klant')
         table.add_column('Eigenschap')
@@ -115,11 +116,11 @@ class KlantController:
         console = Console()
         console.print(table)
 
+        # Vraag een bevestiging aan de gebruiker
         proceed = input('Wil je deze klant wijzigen? (j/n)')
 
         if proceed == 'j':
             self.__klant_repo.update(Klant(klant_bewerkt))
-
             print('De klant is gewijzigd.')
         else:
             print('De klant is niet gewijzigd.')
@@ -135,6 +136,7 @@ class KlantController:
 
         klant = self.__klant_repo.get_by_id(klant_id)
 
+        # Vraag een bevestiging aan de gebruiker
         if 'j' == input('Weet je zeker dat je de klant {naam} wil verwijderen? (j/n)'.format(naam = klant.naam())):
             self.__klant_repo.delete_by_id(int(klant_id))
             print('De klant is verwijderd.')

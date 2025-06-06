@@ -87,6 +87,7 @@ class ContractController:
         console.print(totaal_tabel)
 
     def nieuw_contract(self) -> None:
+        # Toon een lijst met klanten
         klanten_list = self.__klant_repo.get_all()
         klant_table = KlantTable(klanten_list)
         klant_table.print()
@@ -94,6 +95,7 @@ class ContractController:
         print('om een nieuw contract te maken, dient u een klant te selecteren.')
         klant_id = self.__prompt_for_klant_id()
 
+        # Toon een lijst met vestigingen
         vestigingen_list = self.__vestiging_repo.get_all()
         vestiging_table = VestigingTable(vestigingen_list)
         vestiging_table.print()
@@ -141,8 +143,10 @@ class ContractController:
             else:
                 break
 
+        # Het contract toevoegen aan de database
         nieuw_contract_id = self.__contract_repo.insert(contract)
 
+        # De gecontracteerde fietsen toevoegen aan de database
         for geselecteerde_fiets in geselecteerde_fietsen_list:
             contract_fiets = ContractFiets({
                 'contract_id': nieuw_contract_id,
@@ -152,6 +156,7 @@ class ContractController:
 
         print('Het nieuwe contract is toegevoegd. U huurt {aantal} fietsen'.format(aantal = len(geselecteerde_fietsen_list)))
 
+        # Het toegevoegde contract kan direct getoond worden wanneer de gebruiker dat wil
         if 'j' == input('Wil je het contract bekijken? (j/n)'):
             self.toon_contract(nieuw_contract_id)
 
